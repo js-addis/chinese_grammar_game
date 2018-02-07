@@ -80,7 +80,7 @@ function filter_blank($array) {
 }
 $all_challenges = find_all();
 ?>
-<html>
+<html id='html'>
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="grammar.css">
@@ -123,6 +123,9 @@ $all_challenges = find_all();
 
         $(document).ready(function() {
             $(".new_row").first().click();
+        })
+        $("#html").mouseleave(function() {
+            $("#mouseleave").html("User's mouse left the page!");
         })
     </script>
 
@@ -246,15 +249,21 @@ $all_challenges = find_all();
                                 children2 = shuffle(clone);
                             }
                         })
+                        $("#outer").append("<div class='english_div'></div>");
+                        $(".english_div").css({"margin": "auto","display": "flex", "margin-bottom": "20px", "color": "black"});
                         $("#outer").append("<div class='correct_div'></div>");
                         $(".correct_div").css({"margin": "auto","display": "flex", "margin-bottom": "160px"});
                         $("#outer").append("<div class='wrong_div'></div>");
                         $(".wrong_div").css({"margin": "auto","display": "flex"});
-                        children1 = children1base.clone();
 
+                        children1 = children1base.clone();
+                        var english_clone = english.clone();
+
+                        $(english_clone).css({"color": "black","margin": "auto","font-size":"20px","background-color":"whitesmoke"});
                         $(children1).css({"background-color": "whitesmoke", "margin": "auto", "width": "60px", "height": "35px", "border": "1px solid black", "user-select": "none","cursor": "pointer"});
                         $(children2).css({"background-color": "whitesmoke","color": "black", "margin": "auto", "width": "60px", "height": "35px", "box-shadow": "0px 1px 1px black", "user-select": "none","cursor": "pointer"});
 
+                        $(".english_div").append(english_clone);
                         $(".correct_div").append(children1);
                         $(".wrong_div").append(children2);
 
@@ -276,7 +285,7 @@ $all_challenges = find_all();
                                         $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px'>Correct!</p></div>");
                                         $("#log-container").slideDown();
 
-                                        $("#log-container div:contains(" +english.text()+ ")").css({"background-color": "greenyellow"});
+                                        $("#log-container div:contains(" +english.text()+ ")").css({"background-color": "greenyellow","color": "cornflowerblue"});
 
                                      }
                                  } else {
@@ -284,7 +293,7 @@ $all_challenges = find_all();
                                      $(ui.draggable).css({"backgroundColor": "red"});
                                      $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px;color:red'>Wrong!</p></div>");
                                      $("#log-container").slideDown();
-                                     $("#log-container div:contains(" +english.text()+ ")").css({"color": "red"});
+                                     $("#log-container div:contains(" +english.text()+ ")").css({"color": "red", "background-color": "whitesmoke"});
                                  }
                                 if(children2.style.backgroundColor = "greenyellow"){
                                     alert("complete");
@@ -303,6 +312,7 @@ $all_challenges = find_all();
                 </script>
             </div>
             <div id="outer"></div>
+            <div id="mouseleave" style="color:red;padding-left:8px;bottom:0px"></div>
         </div>
     </body>
 
