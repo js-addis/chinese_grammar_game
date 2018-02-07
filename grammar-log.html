@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="grammar.css">
+</head>
+
+<script>
+
+    $('.new').click(function click(){
+
+        var english = $(this).find('.english');
+        var container1 = $(this).find('#should-look');
+        var container2 = $(this).find('#appears');
+        var correct = new Audio('sounds/correct.wav');
+        var wrong = new Audio('sounds/wrong.wav');
+        var complete = new Audio('sounds/complete.wav');
+        var count = 0;
+
+        var children1 = $();
+        var children2 = $();
+
+        $('#outer').empty();
+
+        $('#outer').append("<div id='englishdiv' style='width: 100%; display: flex; margin-bottom: 20px'></div>");
+        $(english).css({"fontSize": "20px", "margin": "auto", "display": "inline-block"});
+        $('#englishdiv').append(english);
+
+        $(container1).children().each(function(){
+            if($(this).text() != ""){
+               children1 = $(children1).add($(this));
+               this.style.userSelect = 'none';
+            }
+        })
+        $(container2).children().each(function(){
+            if($(this).text() != ""){
+               children2 = $(children2).add($(this));
+                this.style.userSelect = 'none';
+            }
+        })
+        $(children1).css({"width": "50px", "height": "20px", "margin": "1px auto", "display": "inline-block", "color": "whitesmoke", "border": "1px solid black"});
+
+        $(children1).droppable({
+            accept: children2,
+            drop: function(ev, ui) {
+                var dropped = $(ui.draggable);
+                 ui.draggable.position({
+                    my: "center",
+                    at: "center",
+                    of: $(this),
+                 });
+                if($(this).text() == dropped.text()){
+                    correct.play();
+                    $(ui.draggable).css({"backgroundColor": "greenyellow"});
+                    count++;
+                    if(count == children1.length){
+                        complete.play();
+                        $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px'>Correct!</p></div>");
+                        $("#log-container").slideDown();
+                     }
+                 } else {
+                     wrong.play();
+                     $(ui.draggable).css({"backgroundColor": "red"});
+                     $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px;color:red'>Wrong!</p></div>");
+                 }
+                if(children2.style.backgroundColor = "greenyellow"){
+                    alert("complete");
+                }
+            }
+        });
+
+        $('#outer').append("<div id='childrendiv1' style='width: 100%; height: 50%; display: flex;'></div>");
+
+        $('#childrendiv1').append(children1);
+
+        $(children2).css({"width": "50px", "height": "20px", "margin": "1px auto", "display": "inline-block", "boxShadow": "0px 1px 1px black"});
+        $(children2).draggable({
+            stack: false,
+            cursor: "pointer",
+            drag: function(event, ui){
+                $(this).css({"backgroundColor": "white"});
+            }
+        });
+
+        $('#outer').append("<div id='childrendiv2' style='width: 100%; height: 50%; display: flex;'></div>");
+
+        $('#childrendiv2').append(children2);
+
+    })
+</script><div class='new'>
+    <div class='english'>oyoyooyy</div>
+    <div id='should-look'>
+        <div class='block'>asd</div>
+        <div class='block'>asd</div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+    </div>
+
+    <div id='appears'>
+        <div class='block'>asd</div>
+        <div class='block'>asd</div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+    </div>
+</div>
+
+<div class='new'>
+    <div class='english'>sfg</div>
+    <div id='should-look'>
+        <div class='block'>asd</div>
+        <div class='block'>asd</div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+    </div>
+
+    <div id='appears'>
+        <div class='block'>asd</div>
+        <div class='block'>asd</div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+        <div class='block'></div>
+    </div>
+</div>
+

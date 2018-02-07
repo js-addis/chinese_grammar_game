@@ -1,0 +1,148 @@
+body {
+    width: 100%;
+    height: 320px;
+    background-color: whitesmoke;
+    display: flex;
+    margin: 0px;
+}
+
+#center {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#outer {
+    margin: auto;
+    margin-top: 70px;
+    background-color: whitesmoke;
+    width: 65%;
+    height: 400px;
+    max-height: 400px;
+    z-index: -1;
+    left: 18%;
+    position: absolute;
+
+    cursor:pointer;
+}
+
+input[type=text] {
+    width: 99%;
+    display: inline;
+}
+input[type=button] {
+    width: 15%;
+    display: inline;
+    float: right;
+    cursor: pointer;
+}
+#submit {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: greenyellow;
+    border: 1px solid black;
+    padding: 2px;
+}
+#submit:hover{
+    border-color: cornflowerblue;
+}
+#should-button {
+    border: 1px solid black;
+    background-color: greenyellow;
+}
+#appears-button {
+    border: 1px solid black;
+    background-color: greenyellow;
+}
+#container {
+    display: none;
+    float: left;
+    height: auto;
+    width: 45%;
+    background-color: azure;
+    border: 1px solid whitesmoke;
+    z-index: 99;
+    position: relative;
+    padding: 2px;
+    box-shadow: 0px 1px 1px black;
+}
+#log-container {
+    display: none;
+    float: right;
+    height: 100%;
+    width: 45%;
+    background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+    z-index: 98;
+    position: relative;
+    overflow-y: scroll;
+    box-shadow: 0px 1px 1px black;
+    padding: 2px;
+}
+
+.divContainer {
+    display: inline-block;
+    height: auto;
+    width: 100%;
+    padding: 6px;
+    clear: both;
+}
+#should-look {
+    clear: both;
+    display: none;
+}
+#appears {
+    clear: both;
+}
+.character {
+    width: 50px;
+    height: 30px;
+    border: 1px solid black;
+}
+.slide-down-panel {
+    margin: auto;
+    display: inline-flex;
+    float: left;
+    height: 30px;
+    box-shadow: 0px 1px 1px black;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    background-color: lightgrey;
+}
+p {
+    margin: auto;
+    font-size: 20px;
+    color: cornflowerblue;
+    text-shadow: 1px 1px 1px black;
+}
+.should {
+    font-size: 20px;
+    padding: 2px;
+    width: 50px;
+    height: 20px;
+    margin: 1px auto;
+    border: 1px solid black;
+    color: whitesmoke;
+    user-select: none;
+    cursor: pointer;
+    z-index: 0;
+    position: relative;
+}
+.appears {
+    font-size: 20px;
+    padding: 2px;
+    width: 50px;
+    height: 20px;
+    margin: 1px auto;
+    box-shadow: 0px 1px 1px black;
+    color: black;
+    user-select: none;
+    cursor: pointer;
+    z-index: 0;
+    position: relative;
+}
+
+
+

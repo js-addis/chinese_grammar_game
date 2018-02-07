@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="grammar.css">
+    </head>
+    <body>
+        <div id="center">
+            <div class="slide-down-panel" id="panel1" style="width: 46%"><p>Add new challenge</p></div>
+            <div class="slide-down-panel" id="panel2" style="width: 45%; float: right"><p>Challenge list</p></div>
+
+            <div id="container">
+                <form method="post" action="">
+                    English meaning: <br/><input type="text" id="english"><br/>
+
+                    <label>Correct Chinese characters: </label><br/>
+                    <div class="divContainer" id="should-look-container"></div>
+                    <input type="button" value="add" id ="should-button"><br/>
+
+                    <label>How they appear to user: </label><br/>
+                    <div class="divContainer" id="appears-container"></div>
+                    <input type="button" value="add" id ="appears-button"><br/>
+
+                    <input type="button" value="Create" id="submit">
+                </form>
+            </div>
+
+            <div id="log-container"></div>
+            <div id="outer">
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+
+            var x = 0;
+            var y = 0;
+            var count = 0;
+            $(document).ready(function(){
+
+                var correct = new Audio("sounds/correct.wav");
+                var complete = new Audio("sounds/complete.wav");
+                var wrong = new Audio("sounds/wrong.wav");
+                var count = 0;
+
+                var english = "<p style='color:black; text-shadow:0px 0px 0px black'>I like to eat Chinese food</p>";
+
+                var should1 = "<div class='should'>我</div>";
+                var should2 = "<div class='should'>喜欢</div>";
+                var should3 = "<div class='should'>吃</div>";
+                var should4 = "<div class='should'>中国</div>";
+                var should5 = "<div class='should'>菜</div>";
+
+                var appears1 = "<div class='appears'>中国</div>";
+                var appears2 = "<div class='appears'>菜</div>";
+                var appears3 = "<div class='appears'>吃</div>";
+                var appears4 = "<div class='appears'>我</div>";
+                var appears5 = "<div class='appears'>喜欢</div>";
+
+                $("#outer").append("<div id='english-div' style='width:100%; display:flex; margin:auto; margin-bottom:20px'</div>");
+                $("#outer").append("<div id='container1' style='width:100%; display:flex; margin:auto; height:50%'</div>");
+                $("#outer").append("<div id='container2' style='width:100%; display:flex; margin:auto; height:50%'</div>");
+
+                $("#english-div").append(english);
+                $("#container1").append(should1, should2, should3, should4, should5);
+                $("#container2").append(appears1, appears2, appears3, appears4, appears5);
+
+                $(".appears").draggable({
+                    stack: false,
+                    cursor: "pointer",
+                    drag: function(event, ui){
+                        $(this).css({"backgroundColor": "white"});
+                    }
+                });
+                $(".should").droppable({
+                    accept: ".appears",
+                    drop: function(ev, ui) {
+                        var dropped = $(ui.draggable);
+                         ui.draggable.position({
+                            my: "center",
+                            at: "center",
+                            of: $(this),
+                         });
+                        if($(this).text() == dropped.text()){
+                            $(dropped).css({"background-color": "greenyellow"});
+                            correct.play();
+                            $(".appears").closest().css({"background-color": "greenyellow"});
+                            count++;
+                            if(count == 5){
+                                complete.play();
+                                $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px'>Correct!</p></div>");
+                                $("#log-container").slideDown();
+                             }
+                         } else {
+                             $(dropped).css({"backgroundColor": "red"});
+                             wrong.play();
+                             $("#outer").append("<div style='display:flex;width:100%'><p style='margin:auto;font-size:60px;color:red'>Wrong!</p></div>");
+                         }
+                        if(children2.style.backgroundColor = "greenyellow"){
+                            alert("complete");
+                        }
+                    }
+                });
+
+            })
+            $('#should-button').click(function(){
+                if(x < 10){
+                    x++;
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    input.value = "";
+                    input.className = x + "should";
+                    $(input).css({"width": "30px", "display": "inline-block", "margin": "3px"});
+                    $('#should-look-container').append(input);
+                }
+            });
+            $('#appears-button').click(function(){
+                if(y < 10){
+                    y++;
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    input.value = "";
+                    input.className = y + "appears";
+                    $(input).css({"width": "30px", "display": "inline-block", "margin": "3px"});
+                    $('#appears-container').append(input);
+                }
+            });
+            $(document).ready(function(){
+                var clicked = false;
+                $('#panel1').click(function(){
+                    if (!clicked){
+                        clicked = true;
+                        $('#container').slideDown();
+                        $('#log-container').slideDown();
+                    } else {
+                        clicked = false;
+                        $("#container").slideUp();
+                        $("#log-container").slideUp();
+                    }
+                })
+            });
+            $(document).ready(function(){
+                var clicked = false;
+                $('#panel2').click(function(){
+                    if (!clicked){
+                        clicked = true;
+                        $('#log-container').slideDown();
+                    } else {
+                        clicked = false;
+                        $("#log-container").slideUp();
+                    }
+                })
+            });
+            $('#outer').click(function(){
+                $('#container').slideUp();
+                $('#log-container').slideUp();
+            });
+            $('#submit').click(function(){
+
+                var english =  $('#english').val(); $('#english').val(null);
+                var should1 =  $('.1should').val(); $('.1should').val(null);
+                var should2 =  $('.2should').val(); $('.2should').val(null);
+                var should3 =  $('.3should').val(); $('.3should').val(null);
+                var should4 =  $('.4should').val(); $('.4should').val(null);
+                var should5 =  $('.5should').val(); $('.5should').val(null);
+                var should6 =  $('.6should').val(); $('.6should').val(null);
+                var should7 =  $('.7should').val(); $('.7should').val(null);
+                var should8 =  $('.8should').val(); $('.8should').val(null);
+                var should9 =  $('.9should').val(); $('.9should').val(null);
+                var should10 = $('.10should').val(); $('.10should').val(null);
+
+                var appears1 =  $('.1appears').val(); $('.1appears').val(null);
+                var appears2 =  $('.2appears').val(); $('.2appears').val(null);
+                var appears3 =  $('.3appears').val(); $('.3appears').val(null);
+                var appears4 =  $('.4appears').val(); $('.4appears').val(null);
+                var appears5 =  $('.5appears').val(); $('.5appears').val(null);
+                var appears6 =  $('.6appears').val(); $('.6appears').val(null);
+                var appears7 =  $('.7appears').val(); $('.7appears').val(null);
+                var appears8 =  $('.8appears').val(); $('.8appears').val(null);
+                var appears9 =  $('.9appears').val(); $('.9appears').val(null);
+                var appears10 = $('.10appears').val(); $('.10appears').val(null);
+
+                $.post("grammar.php",
+                    {
+                        english: english,
+
+                        should1: should1, should2: should2, should3: should3, should4: should4, should5: should5,
+                        should6: should6, should7: should7, should8: should8, should9: should9, should10: should10,
+
+                        appears1: appears1, appears2: appears2, appears3: appears3, appears4: appears4, appears5: appears5,
+                        appears6: appears6, appears7: appears7, appears8: appears8, appears9: appears9, appears10: appears10,
+                    }
+                );
+            });
+            function load() {
+                $.ajax({
+                    url: "grammar-log.html",
+                    cache: false,
+                    success: function(html) {
+                        $("#log-container").prepend().html(html);
+
+                    }
+                })
+            }
+            setInterval(load, 500);
+        </script>
+    </body>
+</html>
