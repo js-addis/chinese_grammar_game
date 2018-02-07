@@ -301,7 +301,7 @@ $all_challenges = find_all();
                             }
                         });
                         $(children2).draggable({
-                            stack: false,
+
                             cursor: "pointer",
                             drag: function(event, ui){
                                 $(this).css({"backgroundColor": "white"});
