@@ -2,6 +2,7 @@
 <?php
 
 require_once('database.php');
+
 $db = db_connect();
 
 if(isset($_POST["submit"])) {
@@ -170,11 +171,15 @@ $all_challenges = find_all();
 
             <div id="log-container">
                 <?php while($challenge = mysqli_fetch_assoc($all_challenges)) { ?>
-                    <div class='new_row'  style="background-color: whitesmoke;z-index:99;border-radius:3px;box-shadow: 0px 1px 1px black;border:1px solid black;cursor:pointer;user-select:none">
+
+                    <div class='new_row' style="background-color: whitesmoke;z-index:99;border-radius:3px;box-shadow: 0px 1px 1px black;border:1px solid black;cursor:pointer;user-select:none">
+
                         <div id="info" style="width:85%;display:inline-block">
                             <?php echo "<div class='english' style='color:cornflowerblue;margin-left:1px'>" . $challenge['english'] . "</div>"; ?>
                         </div>
-                        <?php echo "<div style='color:red;float:right;padding:3px;display:inline-block;margin-right:5px;cursor:not-allowed'>  x  </div>" ?>
+
+                        <input type='submit' name='delete' id='delete' value='x' style='color:red;float:right;display:inline-block;margin:9px;cursor:pointer;color:white;background-color:red;border:1px solid black;border-radius:100%'>
+
                         <div class="content" style="display:inline-block">
 
                             <?php echo "<div style='color:whitesmoke;display:inline-block;user-select:none'>" . $challenge['char1'] . "</div>"; ?>
@@ -226,6 +231,19 @@ $all_challenges = find_all();
 
                       return array;
                     };
+                    $("#delete").click(function() {
+                        var value = $(this).parent().find(".english").text();
+                        alert(value);
+
+                        $.ajax({
+                            url: 'delete.php',
+                            type: 'POST',
+                            data: {'english' : value},
+                            success: function() {
+                                alert(value);
+                            }
+                        });
+                    });
                     $(".new_row").click(function() {
                         var info = $(this).find('.info');
                         var content = $(this).find('.content');
