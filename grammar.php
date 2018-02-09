@@ -178,7 +178,7 @@ $all_challenges = find_all();
                             <?php echo "<div class='english' style='color:cornflowerblue;margin-left:1px'>" . $challenge['english'] . "</div>"; ?>
                         </div>
 
-                        <input type='submit' name='delete' id='delete' value='x' style='color:red;float:right;display:inline-block;margin:9px;cursor:pointer;color:white;background-color:red;border:1px solid black;border-radius:100%'>
+                        <input type='submit' name='delete' class='delete' value='x' style='color:red;float:right;display:inline-block;margin:9px;cursor:pointer;color:white;background-color:red;border:1px solid black;border-radius:100%'>
 
                         <div class="content" style="display:inline-block">
 
@@ -231,16 +231,19 @@ $all_challenges = find_all();
 
                       return array;
                     };
-                    $("#delete").click(function() {
+                    $(".delete").click(function(event) {
+
+                        event.preventDefault();
                         var value = $(this).parent().find(".english").text();
-                        alert(value);
+                        var thisNode = $(this).parent();
 
                         $.ajax({
                             url: 'delete.php',
-                            type: 'POST',
-                            data: {'english' : value},
+                            type: 'GET',
+                            data: {delete : value},
                             success: function() {
-                                alert(value);
+
+                                $(thisNode).remove();
                             }
                         });
                     });
@@ -329,7 +332,9 @@ $all_challenges = find_all();
 
                 </script>
             </div>
-            <div id="outer"></div>
+            <div id="outer">
+
+            </div>
             <div id="mouseleave" style="color:red;padding-left:8px;bottom:0px"></div>
         </div>
     </body>

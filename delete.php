@@ -3,10 +3,12 @@
 require('database.php');
 $db = db_connect();
 
-$english = $_POST['english'];
+if(isset($_GET['delete'])) {
+    $delete = $_GET['delete'];
 
-$sql = "DELETE FROM characters WHERE english= " . $english . " LIMIT 1";
+    $sql = "DELETE FROM characters WHERE english='$delete'";
 
-$result = mysqli_query($db, $sql);
+    $result = mysqli_query($db, $sql);
+}
 
 ?>
