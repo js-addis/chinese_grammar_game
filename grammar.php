@@ -170,6 +170,12 @@ $all_challenges = find_all();
             </div>
 
             <div id="log-container">
+                <div id="password" style="display:inline-block;width:99%;margin-bottom:5px;display:none">
+                    <form id="password_check" name="password_check" action="" method="POST" enctype="multipart/form-data">
+                        <p style="font-size: 13px; color: greenyellow">Hint: What do we call our Teacher? (In english, lowercase, no space)</p>
+                        <input type="password" name="password" id="password_checker" placeholder="Enter password to delete." style="height:30px;width:100%" autofocus="true">
+                    </form>
+                </div>
                 <?php while($challenge = mysqli_fetch_assoc($all_challenges)) { ?>
 
                     <div class='new_row' style="background-color: whitesmoke;z-index:99;border-radius:3px;box-shadow: 0px 1px 1px black;border:1px solid black;cursor:pointer;user-select:none">
@@ -232,20 +238,36 @@ $all_challenges = find_all();
                       return array;
                     };
                     $(".delete").click(function(event) {
-
-                        event.preventDefault();
                         var value = $(this).parent().find(".english").text();
                         var thisNode = $(this).parent();
 
-                        $.ajax({
-                            url: 'delete.php',
-                            type: 'GET',
-                            data: {delete : value},
-                            success: function() {
+                        $("#password").fadeIn();
+                        $("#password_checker").keypress(function(event1) {
 
-                                $(thisNode).remove();
+                            if(event1.keyCode==13) {
+
+
+                                if($("#password_checker").val() == "chenlaoshi") {
+                                    event1.preventDefault();
+                                    event.preventDefault();
+
+                                    $.ajax({
+                                        url: 'delete.php',
+                                        type: 'GET',
+                                        data: {delete : value},
+                                        success: function() {
+
+                                            $(thisNode).remove();
+                                            $("#password_checker").val(null);
+                                            $("#password").fadeOut();
+                                        }
+                                    });
+                                } else {
+                                    alert("Wrong Password");
+                                }
                             }
-                        });
+                        })
+
                     });
                     $(".new_row").click(function() {
                         var info = $(this).find('.info');
@@ -337,6 +359,7 @@ $all_challenges = find_all();
             </div>
             <div id="mouseleave" style="color:red;padding-left:8px;bottom:0px"></div>
         </div>
+
     </body>
 
 </html>
